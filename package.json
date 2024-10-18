@@ -1,0 +1,14 @@
+{
+  "name": "airport-server",
+  "version": "1.0.0",
+  "description": "自动化IP检测、更换、规则替换等",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Duan JiWang",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.15.3"
+  }
+}
