@@ -1,4 +1,6 @@
 const fs = require("fs");
+const updateConfig = require('../update_config/update_config');
+const AIRPORT_CONFIG = require('../base_config/base_config');
 
 /**
  * 读取文件并且将内容虚拟化
@@ -67,6 +69,12 @@ function getRegExpIndex(arrayIndex, configList) {
   }
 }
 
+/**
+ * 获取配置文件中的代理片段
+ * @param {Object} arrayIndex 索引存储
+ * @param {Array} configList 配置文件序列化数组
+ * @returns {Array} Array
+ */
 function getConfigProxySlice(arrayIndex, configList) {
   const proxiesList = configList.slice(arrayIndex.proxyStartIndex, arrayIndex.proxyEndIndex);
   // 配置文件代理配置段
@@ -84,9 +92,28 @@ function getConfigProxySlice(arrayIndex, configList) {
   return proxyConfigList;
 }
 
+/**
+ * 获取Socks5代理配置
+ * @returns {Array} Array
+ */
+function getProxyConfig() {
+  let proxyConfigContext = [];
+  
+  // 开始生成配置文件模板
+  updateConfig.parsedProxies.forEach(proxy => {
+    const airportConfig = new AIRPORT_CONFIG(proxy.proxyState, proxy.host, proxy.port, proxy.auth, proxy.password)
+    proxyConfigContext = proxyConfigContext.concat(airportConfig.proxyConfig);
+  });
+
+  const newProxyConfigContext = proxyConfigContext.concat(updateConfig.proxyConfigList.join('\n').split('\n'))
+
+  return newProxyConfigContext;
+}
+
 module.exports = {
   getFileSerialize,
   parseProxyString,
   getRegExpIndex,
-  getConfigProxySlice
+  getConfigProxySlice,
+  getProxyConfig
 }

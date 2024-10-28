@@ -7,18 +7,16 @@ const { getFileSerialize, parseProxyString, getRegExpIndex, getConfigProxySlice 
 const arrayIndex = {};
 
 // 读取代理内容并作初步分割
-const proxyStrings = getFileSerialize(AIRPORT_CONFIG.proxyFile)
+const proxyStrings = getFileSerialize(AIRPORT_CONFIG.proxyFile);
 
 // 获取配置文件路径
-const configList = getFileSerialize(AIRPORT_CONFIG.configFilePath)
+const configList = getFileSerialize(AIRPORT_CONFIG.configFilePath);
 
 // 获取指定代理、代理组、规则行所索引
 getRegExpIndex(arrayIndex, configList);
 
 // 获取配置文件代理片段
 const proxyConfigList = getConfigProxySlice(arrayIndex, configList);
-
-console.log(proxyConfigList);
 
 module.exports = {
   parsedProxies: proxyStrings.map(parseProxyString), //解析每个代理字符串
