@@ -67,8 +67,26 @@ function getRegExpIndex(arrayIndex, configList) {
   }
 }
 
+function getConfigProxySlice(arrayIndex, configList) {
+  const proxiesList = configList.slice(arrayIndex.proxyStartIndex, arrayIndex.proxyEndIndex);
+  // 配置文件代理配置段
+  let proxyContext = '';
+  for (let index = 0; index < proxiesList.length; index++) {
+    const element = proxiesList[index];
+    proxyContext += element + '\n';
+  }
+  // 按照 - name 行分割
+  const entries = proxyContext.split(/(?=-\sname:)/).filter(entry => entry.trim() !== '');
+  // 每段作为一个数组元素
+  const proxyConfigMap = entries.map(entry => [entry.trim()]);
+  // 过滤出机场配置
+  const proxyConfigList = proxyConfigMap.filter(entry => !entry[0].includes('socks5'));
+  return proxyConfigList;
+}
+
 module.exports = {
   getFileSerialize,
   parseProxyString,
-  getRegExpIndex
+  getRegExpIndex,
+  getConfigProxySlice
 }

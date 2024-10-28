@@ -18,7 +18,7 @@ const configMap = updateConfig.configList.map(item => item + '\n');
 const config = configMap.join('')
 
 // 开始生成配置文件
-fs.writeFileSync('./output.yaml', config);
+fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, config);
 
 // 获取Socks5代理配置函数
 function getProxyConfig() {
