@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { getProxyConfig } = require('../utils/proxy_slice');
 const updateConfig = require('./update_config');
+const { getProxyConfig } = require('../utils/proxy_slice');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
 // 将代理配置添加到机场配置当中
