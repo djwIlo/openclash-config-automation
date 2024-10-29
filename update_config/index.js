@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { getProxyConfig } = require('../utils/index');
+const { getProxyConfig } = require('../utils/proxy_slice');
 const updateConfig = require('./update_config');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
