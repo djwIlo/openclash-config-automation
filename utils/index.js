@@ -1,5 +1,5 @@
 const fs = require("fs");
-const updateConfig = require('../update_config/update_config');
+// const updateConfig = require('../update_config/update_config');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
 /**
@@ -92,28 +92,10 @@ function getConfigProxySlice(arrayIndex, configList) {
   return proxyConfigList;
 }
 
-/**
- * 获取Socks5代理配置
- * @returns {Array} Array
- */
-function getProxyConfig() {
-  let proxyConfigContext = [];
-  
-  // 开始生成配置文件模板
-  updateConfig.parsedProxies.forEach(proxy => {
-    const airportConfig = new AIRPORT_CONFIG(proxy.proxyState, proxy.host, proxy.port, proxy.auth, proxy.password)
-    proxyConfigContext = proxyConfigContext.concat(airportConfig.proxyConfig);
-  });
-
-  const newProxyConfigContext = proxyConfigContext.concat(updateConfig.proxyConfigList.join('\n').split('\n'))
-
-  return newProxyConfigContext;
-}
-
 module.exports = {
   getFileSerialize,
   parseProxyString,
   getRegExpIndex,
   getConfigProxySlice,
-  getProxyConfig
+  // getProxyConfig
 }
