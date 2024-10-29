@@ -94,10 +94,11 @@ function getConfigProxySlice(arrayIndex, configList) {
 
 /**
  * 获取Socks5代理配置
- * @param {*} parsedProxies 
+ * @param {Array} parsedProxies 
+ * @param {Array} proxyConfigList 
  * @returns {Array} Array
  */
-function getProxyConfig(parsedProxies) {
+function getProxyConfig(parsedProxies, proxyConfigList) {
   let proxyConfigContext = [];
   // 解析每个代理字符串
   // const parsedProxies = proxyStrings.map(parseProxyString);
