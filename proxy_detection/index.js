@@ -3,7 +3,7 @@ const axios = require('axios');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 const parsedProxies = require('../update_config')
 
-// console.log(parsedProxies);
+console.log(parsedProxies);
 
 // 设置代理
 const proxyConfig = {

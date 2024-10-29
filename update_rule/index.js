@@ -1,18 +1,12 @@
 const fs = require('fs');
-const path = require('path');
+const AIRPORT_CONFIG = require('../base_config/base_config')
+const { getFileSerialize } = require('../utils');
 
-// 获取配置文件路径
-// const ruleFilePath = `/etc/openclash/custom/openclash_custom_rules.list`;
-const baseRuleFilePath = './base_rule.list'
-const ruleFilePath = `./custom_rule.list`;
+// 获取基础rule配置
+const baseRuleConfig = getFileSerialize(AIRPORT_CONFIG.listRuleseller);
 
-const baseRuleContext = fs.readFileSync(baseRuleFilePath, 'utf8');
-const ruleContext = fs.readFileSync(ruleFilePath, 'utf8');
-
-const baseRuleContextList = baseRuleContext.split('\n');
-const ruleContextList = ruleContext.split('\n');
-
-// console.log(baseRuleContextList);
+// 获取代理序列
+// const 
 
 // >>>>>>>>>
 const proxyIpList = [
@@ -40,8 +34,8 @@ const IPLIST = [
 
 // 开始生成基础规则配置
 let rulesContext = ''
-for (let index = 0; index < baseRuleContextList.length; index++) {
-  const element = baseRuleContextList[index];
+for (let index = 0; index < baseRuleConfig.length; index++) {
+  const element = baseRuleConfig[index];
   // console.log(element);
   rulesContext += element + '\n'
 }

@@ -3,13 +3,13 @@ const fs = require("fs");
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
 /**
- * 读取文件并且将内容虚拟化
- * @param {String} file 文件地址
+ * 读取文件并且将内容序列化
+ * @param {String} filePath 文件地址
  * @returns {Array} 返回一个数组
  */
-function getFileSerialize(file) {
+function getFileSerialize(filePath) {
   try {
-    const fileContext = fs.readFileSync(file, "utf8");
+    const fileContext = fs.readFileSync(filePath, "utf8");
     const data = fileContext.split('\n')
     return data;
   } catch (err) {
@@ -92,10 +92,31 @@ function getConfigProxySlice(arrayIndex, configList) {
   return proxyConfigList;
 }
 
+/**
+ * 获取Socks5代理配置
+ * @param {*} parsedProxies 
+ * @returns {Array} Array
+ */
+function getProxyConfig(parsedProxies) {
+  let proxyConfigContext = [];
+  // 解析每个代理字符串
+  // const parsedProxies = proxyStrings.map(parseProxyString);
+  
+  // 开始生成配置文件模板
+  parsedProxies.forEach(proxy => {
+    const airportConfig = new AIRPORT_CONFIG(proxy.proxyState, proxy.host, proxy.port, proxy.auth, proxy.password);
+    proxyConfigContext = proxyConfigContext.concat(airportConfig.proxyConfig);
+  });
+
+  const newProxyConfigContext = proxyConfigContext.concat(proxyConfigList.join('\n').split('\n'));
+
+  return newProxyConfigContext;
+}
+
 module.exports = {
   getFileSerialize,
   parseProxyString,
   getRegExpIndex,
   getConfigProxySlice,
-  // getProxyConfig
+  getProxyConfig
 }
