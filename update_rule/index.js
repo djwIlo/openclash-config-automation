@@ -1,12 +1,16 @@
 const fs = require('fs');
 const AIRPORT_CONFIG = require('../base_config/base_config')
-const { getFileSerialize } = require('../utils');
+const updateConfig = require('../update_config/update_config');
+const { getFileSerialize, getProxyConfig } = require('../utils');
 
 // 获取基础rule配置
 const baseRuleConfig = getFileSerialize(AIRPORT_CONFIG.listRuleseller);
+// console.log(baseRuleConfig);
 
-// 获取代理序列
-// const 
+
+// 获取代理序列化数组
+const proxies =  getProxyConfig(updateConfig.parsedProxies, updateConfig.proxyConfigList)
+console.log(proxies);
 
 // >>>>>>>>>
 const proxyIpList = [
@@ -49,6 +53,6 @@ for (let index = 0; index < IPLIST.length; index++) {
   }
 }
 
-console.log(rulesContext);
+// console.log(rulesContext);
 // 开始写入配置
 fs.writeFileSync('./custom_rule.list', rulesContext);

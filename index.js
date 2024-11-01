@@ -1,5 +1,11 @@
 const koa = require("koa");
+const dotenv = require('dotenv');
 const app = new koa();
+
+// 根据NODE_ENV的值加载相应的配置文件
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+
+console.log(`Running on port: ${process.env.PORT}`);
 
 const PORT = 5024;
 console.log(app);
