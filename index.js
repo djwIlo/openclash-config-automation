@@ -1,20 +1,33 @@
-const koa = require("koa");
-const dotenv = require('dotenv');
-const app = new koa();
+const AIRPORT_CONFIG = require('./base_config/base_config');
+const initAirConfig = require('./init_air_config');
+// const listenProxySeller = require('./update_config');
+// const listenRulesSeller = require('./update_rule')
 
-// 根据NODE_ENV的值加载相应的配置文件
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+// 初始化机场配置，将自定义代理，规则添加到配置文件中
+initAirConfig();
 
-console.log(`Running on port: ${process.env.PORT}`);
+// 监听代理配置
+// listenProxySeller();
 
-const PORT = 5024;
-console.log(app);
+// 监听规则配置
+// listenRulesSeller();
 
-app.use(ctx => {
+// const task = () => {
+//   // 监听代理配置
+//   listenProxySeller();
+
+//   // 监听规则配置
+//   listenRulesSeller();
+// }
+
+// setInterval(task, 10000);
+
+
+AIRPORT_CONFIG.app.use(ctx => {
   console.log(ctx);
   ctx.body = 'Hello Wrold!'
 })
 
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`自动化代理服务已启动！`);
+AIRPORT_CONFIG.app.listen(AIRPORT_CONFIG.PORT, AIRPORT_CONFIG.HOST, () => {
+  console.log(`自动化代理服务已启动！`, `http://${AIRPORT_CONFIG.HOST}:${AIRPORT_CONFIG.PORT}`);
 });

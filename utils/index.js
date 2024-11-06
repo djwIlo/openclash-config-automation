@@ -1,4 +1,6 @@
 const fs = require("fs");
+const os = require('os');
+const path = require('path');
 // const updateConfig = require('../update_config/update_config');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
@@ -24,12 +26,13 @@ function getFileSerialize(filePath) {
  */
 function parseProxyString(proxyString) {
   let parts = proxyString.split('@'); // 分离状态、认证信息、host和port
-  let proxyState = parts[0];
+  let proxyName = parts[0].split(':'); // 代理名称、链式代理名称
   let authInfo = parts[1].split(':'); // 分离用户名、密码
   let hostInfo = parts[2].split(':'); // 分离host、port
   
   return {
-    proxyState: proxyState,
+    proxyState: proxyName[0], // 代理名称
+    linkProxy: proxyName[1], // 链式代理名称
     auth: authInfo[0], // 用户名
     password: authInfo[1], // 密码
     host: hostInfo[0], // IP地址
@@ -45,26 +48,27 @@ function parseProxyString(proxyString) {
  */
 function getRegExpIndex(arrayIndex, configList) {
   // 代理开始行正则
-  const proxiesStartRegExp = /^proxies:$/;
+  // const proxiesStartRegExp = /^proxies:$/;
+  const proxiesStartRegExp = /^proxies:.*/;
 
   // 代理结束行正则
-  const proxiesEndRegExp = /^proxy-groups:$/;
+  const proxiesEndRegExp = /^proxy-groups:.*/;
 
   // 规则开始行正则
-  const ruleStartRegExp = /^rules:$/;
+  const ruleStartRegExp = /^rules:.*/;
 
   for (let index = 0; index < configList.length; index++) {
     const element = configList[index];
     if (element.includes('proxies:') && proxiesStartRegExp.test(element)) {
-      arrayIndex.proxyStartIndex = index + 1
+      arrayIndex.proxyStartIndex = index + 1;
     }
 
     if (element.includes('proxy-groups:') && proxiesEndRegExp.test(element)) {
-      arrayIndex.proxyEndIndex = index - 1
+      arrayIndex.proxyEndIndex = index - 1;
     }
 
     if (element.includes('rules:') && ruleStartRegExp.test(element)) {
-      arrayIndex.ruleStartIndex = index + 1
+      arrayIndex.ruleStartIndex = index + 1;
     }
   }
 }

@@ -1,0 +1,9 @@
+{
+  "HOST": "localhost",
+  "PORT":3000,
+  "DETECTION": "http://www.gstatic.com/generate_204",
+  "CONFIG_FILE_PATH": "/etc/openclash/config/config.yaml",
+  "OUTPUT_CONFIG_PATH": "/etc/openclash/config.yaml",
+  "LIST_PROXYSELLER": "../base_config/list_proxyseller.txt",
+  "LIST_RULESELLER": "../base_config/list_ruleseller.txt"
+}
