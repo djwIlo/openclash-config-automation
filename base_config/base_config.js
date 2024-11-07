@@ -20,6 +20,7 @@ class AIRPORT_CONFIG {
   static outputConfigPath = path.join(__dirname, ENV.OUTPUT_CONFIG_PATH); // 输出到运行时的配置
   static listProxyseller = path.join(__dirname, ENV.LIST_PROXYSELLER); // socks5代理配置路径
   static listRuleseller = path.join(__dirname, ENV.LIST_RULESELLER); // 基础rule配置路径
+  static lanipHistoryProxy = path.join(__dirname, ENV.LANIP_HISTORY_PROXY); // lanIp历史代理使用记录存储文件
   constructor(name = 'proxyIp', host = '127.0.0.1', port = 50101, authuser = 'root', password = '123456') {
     this.proxyConfig = [ //基础socks5代理配置
       `- name: ${name}`,
