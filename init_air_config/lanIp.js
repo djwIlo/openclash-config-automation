@@ -41,7 +41,7 @@ function getArpScanResults() {
 
     // 解析输出数据
     const outputData = result.stdout;
-    const lines = outputData.split('\r\n');
+    const lines = outputData.split('\n');
     const results = lines
         .map(line => line.match(/(\d+\.\d+\.\d+\.\d+)\s+([0-9a-fA-F:]{17}|[0-9a-fA-F:]{14})/))
         .filter(match => match)

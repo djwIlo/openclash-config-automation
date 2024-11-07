@@ -21,7 +21,6 @@ function getProxyResult(file) {
         port: parseInt(hostInfo[1]) // 端口
       });
     })
-    // console.log(proxyArray);
     return arr
   } catch (error) {
     return error;

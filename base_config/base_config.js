@@ -16,8 +16,8 @@ class AIRPORT_CONFIG {
   static PORT = ENV.PORT;
   static notProxyIp = ['192.168.100.1', '192.168.100.2', '192.168.100.3', '192.168.100.4', '192.168.3.1', '192.168.3.252', '192.168.100.251',]
   static detection = ENV.DETECTION; // 检测ip质量
-  static configFilePath = path.join(__dirname, ENV.CONFIG_FILE_PATH); // 未运行时的配置
-  static outputConfigPath = path.join(__dirname, ENV.OUTPUT_CONFIG_PATH); // 输出到运行时的配置
+  static configFilePath = os.type().includes('Windows') ? path.join(__dirname, ENV.CONFIG_FILE_PATH) : ENV.CONFIG_FILE_PATH; // 未运行时的配置
+  static outputConfigPath = os.type().includes('Windows') ? path.join(__dirname, ENV.OUTPUT_CONFIG_PATH) : ENV.OUTPUT_CONFIG_PATH; // 输出到运行时的配置
   static listProxyseller = path.join(__dirname, ENV.LIST_PROXYSELLER); // socks5代理配置路径
   static listRuleseller = path.join(__dirname, ENV.LIST_RULESELLER); // 基础rule配置路径
   static lanipHistoryProxy = path.join(__dirname, ENV.LANIP_HISTORY_PROXY); // lanIp历史代理使用记录存储文件

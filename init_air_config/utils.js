@@ -11,7 +11,7 @@ function readAirConfig(file) {
   try {
     const airText = fs.readFileSync(file, 'utf8');
 
-    const airSerialize = airText.split('\r\n').map(item => item + '\r\n');
+    const airSerialize = airText.split('\n').map(item => item + '\n');
 
     return airSerialize;
   } catch (error) {
@@ -71,8 +71,7 @@ function getCustomProxyConfig(file, AIRPORT_CONFIG) {
       const proxyAuth = itemArr[1].split(':');
       const proxyNetwork = itemArr[2].split(':');
       const proxy = new AIRPORT_CONFIG(proxyName[0], proxyNetwork[0], proxyNetwork[1], proxyAuth[0], proxyAuth[1]);
-      proxyConfig.push(proxy.proxyConfig.join('\r\n') + '\r\n');
-      console.log(proxyConfig);
+      proxyConfig.push(proxy.proxyConfig.join('\n') + '\n');
     });
     
     return proxyConfig.join('');
@@ -96,11 +95,11 @@ function getCustomProxyGroppConfig() {
  */
 function getCustomRuleConfig(ruleFile, proxyFile) {
   const ruleText = fs.readFileSync(ruleFile, "utf8");
-  const ruleArray = ruleText.split('\r\n'); //基础rule配置
+  const ruleArray = ruleText.split('\n'); //基础rule配置
   const lanIp = getArpScanResults();
   const proxyIp = getProxyResult(proxyFile);
   const { assignProxy, storageProxy } = assignProxies(lanIp, proxyIp);
-  const ruleConfig = ruleArray.concat(...assignProxy).map(item => item + '\r\n');
+  const ruleConfig = ruleArray.concat(...assignProxy).map(item => item + '\n');
   return {ruleConfig, storageProxy}
 }
 
@@ -144,7 +143,7 @@ function getConfigProxySlice(arrayIndex, configList) {
   // 按照 - name 行分割
   const entries = proxyContext.split(/(?=-\sname:)/).filter(entry => entry.trim() !== '');
   // 每段作为一个数组元素
-  const proxyConfigMap = entries.map(entry => [entry.trim() + '\r\n']);
+  const proxyConfigMap = entries.map(entry => [entry.trim() + '\n']);
   
   // 过滤出机场配置
   const proxyConfigList = proxyConfigMap.filter(entry => !entry[0].includes('socks5')).join('');
