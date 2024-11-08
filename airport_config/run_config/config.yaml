@@ -1048,52 +1048,52 @@ proxies:
   password: eba6b506-69e9-431f-8f48-f24a2c74b072
   udp: true
 proxy-groups:
-- name: 链式代理-01
+- name: "链式代理-01"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-01"
-- name: 链式代理-02
+- name: "链式代理-02"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-02"
-- name: 链式代理-03
+- name: "链式代理-03"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-03"
-- name: 链式代理-04
+- name: "链式代理-04"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-04"
-- name: 链式代理-05
+- name: "链式代理-05"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-05"
-- name: 链式代理-06
+- name: "链式代理-06"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-06"
-- name: 链式代理-07
+- name: "链式代理-07"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-07"
-- name: 链式代理-08
+- name: "链式代理-08"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-08"
-- name: 链式代理-09
+- name: "链式代理-09"
   type: relay
   proxies:
     - "HK 香港节点"
     - "美国-09"
-- name: 链式代理-10
+- name: "链式代理-10"
   type: relay
   proxies:
     - "HK 香港节点"

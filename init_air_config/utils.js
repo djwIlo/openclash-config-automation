@@ -223,7 +223,7 @@ function getLinkProxyGroup(proxySerialize) {
   for (let index = 0; index < proxySerialize.length; index++) {
     const item = proxySerialize[index];
     const linkProxy = [
-      `- name: ${item.linkProxy}\n`,
+      `- name: "${item.linkProxy}"\n`,
       `  type: relay\n`,
       `  proxies:\n`,
       `    - "HK 香港节点"\n`,
