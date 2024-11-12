@@ -12,15 +12,15 @@ initAirConfig();
 // 监听规则配置
 listenRulesSeller();
 
-// const task = () => {
-//   // 监听代理配置
-//   listenProxySeller();
+const task = async() => {
+  // 监听代理配置
+  // listenProxySeller();
 
-//   // 监听规则配置
-//   listenRulesSeller();
-// }
+  // 监听规则配置
+  listenRulesSeller();
+}
 
-// setInterval(task, 10000);
+setInterval(task, 300000);
 
 
 AIRPORT_CONFIG.app.use(ctx => {

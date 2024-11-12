@@ -23,9 +23,9 @@ const initAirConfig = async () => {
     const historyProxyText = await fs.readFileSync(AIRPORT_CONFIG.lanipHistoryProxy);
     const historyProxy = JSON.parse(historyProxyText);
     // 如果正在运行的配置文件中每个设备的代理ip都在历史记录中就不需要重新写入
-    console.log(444444444, storageProxy);
+    console.log('读取到的历史代理使用记录', historyProxy);
+    console.log('初始化读取到的代理配置', storageProxy);
     const isWrite = utils.isSubset(historyProxy, storageProxy)
-    console.log(isWrite);
     if (isWrite) {
       console.log('本次初始化配置，历史代理不需要更新'); 
     } else {
@@ -47,14 +47,11 @@ const initAirConfig = async () => {
 
   // 插入代理
   const mergeProxyConfig = customProxyConfig.concat(...getAirProxyConfig);
-
-  arrayIndex = utils.getRegExpIndex(airConfigArray);
-
-  airConfigArray.splice(arrayIndex.proxyStartIndex, arrayIndex.proxyEndIndex - arrayIndex.proxyStartIndex + 1, mergeProxyConfig);
-
-  arrayIndex = utils.getRegExpIndex(airConfigArray);
   
-  fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, airConfigArray.join(''));
+  airConfigArray.splice(arrayIndex.proxyStartIndex, arrayIndex.proxyEndIndex - arrayIndex.proxyStartIndex + 1, mergeProxyConfig);
+  // airConfigArray.splice(arrayIndex.proxyStartIndex, arrayIndex.proxyEndIndex - arrayIndex.proxyStartIndex + 1, '哈哈哈哈哈哈哈哈哈哈哈哈哈\n');
+
+  await fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, airConfigArray.join(''));
 }
 
 module.exports = initAirConfig

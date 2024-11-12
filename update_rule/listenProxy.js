@@ -1,8 +1,10 @@
+const fs = require('fs');
 const utils = require("./utils");
 const AIRPORT_CONFIG = require("../base_config/base_config");
 
 async function listenProxy() {
   const proxies = utils.getCustomProxySerialize(AIRPORT_CONFIG);
+  const storageRunConfig = utils.getRunConfig(AIRPORT_CONFIG.outputConfigPath);
 
   try {
     // 代理可用性检测结果
@@ -92,9 +94,22 @@ async function listenProxy() {
     // ]
 
     // 开始替换坏掉的代理
-    const runConfig = utils.updateRunConfig(AIRPORT_CONFIG.outputConfigPath, AIRPORT_CONFIG.lanipHistoryProxy, results);
-    // console.log(runConfig);
-    
+    const { newRunConfigText, proxyCollection} = await utils.updateRunConfig(AIRPORT_CONFIG.outputConfigPath, AIRPORT_CONFIG.lanipHistoryProxy, results);
+    // console.log(newRunConfigText);
+
+    console.log('开始更新运行时配置');
+    if (AIRPORT_CONFIG.testConfigOutputPath == 'test') {
+      console.log('测试');
+      await fs.writeFileSync('./test.yaml', newRunConfigText);
+    } else {
+      console.log('正式');
+      if (proxyCollection.length == 0) {
+        console.log('此次配置文件未作更改，不用更新');
+      } else {
+        await fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, newRunConfigText);
+        console.log('运行时配置更新成功');
+      }
+    }
   } catch (error) {
     console.log(console.error("代理测试过程中出现错误:", error));
   }

@@ -1,6 +1,11 @@
 const fs = require("fs");
 const axios = require("axios");
 
+/**
+ * 读取代理文件并将数据序列化
+ * @param {*} AIRPORT_CONFIG 基础配置常量
+ * @returns 
+ */
 function getCustomProxySerialize(AIRPORT_CONFIG) {
   let proxy = [];
   try {
@@ -93,17 +98,17 @@ async function testProxies(proxies, retries = 3, timeout = 5000) {
 }
 
 /**
- * 更行非运行时配置文件
+ * 更新非运行时配置文件
  * @param {*} filePath 运行时配置路径
  * @param {*} proxies 代理检测结果列表
  */
 async function updateRunConfig(filePath, historyProxyPath, proxies) {
   try {
+    const proxyCollection = [];
     const runConfigText = await fs.readFileSync(filePath, 'utf8');
     let result = runConfigText.split('\n');
     console.log(result.length);
     
-
     // 获取可用和不可用代理
     const ableProxy = proxies.filter(item => item.available === true);
     const unableProxy = proxies.filter(item => item.available === false);
@@ -118,9 +123,11 @@ async function updateRunConfig(filePath, historyProxyPath, proxies) {
           // 获取设备mac
           const mac = el.split('设备mac: ')[1];
 
-          // 获取当前设备的历史代理
+          // 获取当前设备的历史代理并收集
           const { newProxyConfig, isupdate } = await getDeviceHistoryProxy(historyProxyPath, mac, ableProxy);
-
+          console.log('获取到的新的可用代理IP', newProxyConfig);
+          proxyCollection.push(newProxyConfig)
+          
           // 进行代理替换
           console.log('原来的:', el);
           result[i] = el.replace(item.proxyState, newProxyConfig.proxyState).replace(item.host, newProxyConfig.host);
@@ -148,10 +155,9 @@ async function updateRunConfig(filePath, historyProxyPath, proxies) {
       }
     }
 
-    // 将更新后的 result 数组写回到文件
+    // 返回跟新后的配置问价跟更改的代理数量
     const newRunConfigText = result.join('\n');
-    await fs.writeFileSync('./kkk.yaml', newRunConfigText);
-    console.log('运行时配置更新成功');
+    return { newRunConfigText, proxyCollection };
   } catch (error) {
     console.log('读取机场运行时配置出错:', error);
   }
@@ -224,9 +230,24 @@ function getLeastHistoryProxy(historyProxy, proxyList) {
   return { count: minUsageCount, result: leastUsedProxy };
 }
 
+/**
+ * 读取运行时配置文件
+ * @param {*} filePath 运行时配置文件路径
+ * @returns 
+ */
+async function getRunConfig(filePath) {
+  try {
+    const runConfigText = fs.readFileSync(filePath, 'utf8');
+    return runConfigText;
+  } catch (error) {
+    console.log('读取运行时配置文件失败');
+    return '出问题了！'
+  }
+}
 
 module.exports = {
   getCustomProxySerialize,
   testProxies,
-  updateRunConfig
+  updateRunConfig,
+  getRunConfig
 };

@@ -150,7 +150,7 @@ function assignProxies(lanIp, proxyIp) {
 function getConfigProxySlice(arrayIndex, configList, proxySerialize) {
   const proxiesList = configList.slice(
     arrayIndex.proxyStartIndex,
-    arrayIndex.proxyEndIndex
+    arrayIndex.proxyEndIndex + 1
   );
   // 配置文件代理配置段
   let proxyContext = "";
@@ -166,7 +166,6 @@ function getConfigProxySlice(arrayIndex, configList, proxySerialize) {
   const proxyConfigMap = entries.map((entry) => [entry.trim() + "\n"]);
 
   // 过滤出机场配置
-  // const proxyConfigList = proxyConfigMap.filter(entry => !entry[0].includes('socks5')).join('');
   const proxyConfigList = proxyConfigMap.filter(
     (entry) => !entry[0].includes("socks5")
   );
