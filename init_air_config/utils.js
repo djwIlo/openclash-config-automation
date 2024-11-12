@@ -237,10 +237,27 @@ function getLinkProxyGroup(proxySerialize) {
   return linkProxyGroup;
 }
 
+/**
+ * 判断对象obj2是否是obj1的子集 
+ * @param {*} obj1 
+ * @param {*} obj2 
+ * @returns booler
+ */
+function isSubset(obj1, obj2) {
+  for (let key in obj2) {
+    // 检查 obj1 是否有 obj2 的 key，以及 obj2 的值是否为 obj1 对应值的子集
+    if (!(key in obj1) || !obj2[key].every(item => obj1[key].includes(item))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 module.exports = {
   readAirConfig,
   getRegExpIndex,
   getCustomProxyConfig,
   getCustomRuleConfig,
   getConfigProxySlice,
+  isSubset
 };

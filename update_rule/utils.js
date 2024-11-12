@@ -159,18 +159,18 @@ async function updateRunConfig(filePath, historyProxyPath, proxies) {
 
 async function getDeviceHistoryProxy(historyProxyPath, mac, ableProxy) {
   try {
-  const historyProxyText = await fs.readFileSync(historyProxyPath, 'utf8');
-  const historyProxy = JSON.parse(historyProxyText);
-  // console.log(mac, historyProxy[mac]);
-  const result = findAvailableProxy(historyProxy[mac], ableProxy);
-  if (result) {
-    return { newProxyConfig: result, isupdate: false };
-  } else {
-    console.log(mac, '没有可用代理，重新分配一个使用次数最少的可用代理');
-    const {count, result} = getLeastHistoryProxy(historyProxy, ableProxy);
-    // console.log({count, proxy});
-    return { newProxyConfig: result, isupdate: true };
-  } 
+    const historyProxyText = await fs.readFileSync(historyProxyPath, 'utf8');
+    const historyProxy = JSON.parse(historyProxyText);
+    // console.log(mac, historyProxy[mac]);
+    const result = findAvailableProxy(historyProxy[mac], ableProxy);
+    if (result) {
+      return { newProxyConfig: result, isupdate: false };
+    } else {
+      console.log(mac, '没有可用代理，重新分配一个使用次数最少的可用代理');
+      const {count, result} = getLeastHistoryProxy(historyProxy, ableProxy);
+      // console.log({count, proxy});
+      return { newProxyConfig: result, isupdate: true };
+    } 
   } catch (error) {
     console.log('读取历史代理出错', error);
   }

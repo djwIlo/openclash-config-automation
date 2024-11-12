@@ -2,7 +2,7 @@ const fs = require('fs');
 const utils = require('./utils');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
-const initAirConfig = () => {
+const initAirConfig = async () => {
   // 定义存储
 
   // 机场配置序列化数组
@@ -19,7 +19,18 @@ const initAirConfig = () => {
   
   // 开始写入局域网历史代理使用记录
   try {
-    fs.writeFileSync(AIRPORT_CONFIG.lanipHistoryProxy, JSON.stringify(storageProxy)); // 不要使用nodemon启动项目
+    // 读取历史配置文件
+    const historyProxyText = await fs.readFileSync(AIRPORT_CONFIG.lanipHistoryProxy);
+    const historyProxy = JSON.parse(historyProxyText);
+    // 如果正在运行的配置文件中每个设备的代理ip都在历史记录中就不需要重新写入
+    console.log(444444444, storageProxy);
+    const isWrite = utils.isSubset(historyProxy, storageProxy)
+    console.log(isWrite);
+    if (isWrite) {
+      console.log('本次初始化配置，历史代理不需要更新'); 
+    } else {
+      await fs.writeFileSync(AIRPORT_CONFIG.lanipHistoryProxy, JSON.stringify(storageProxy)); // 不要使用nodemon启动项目
+    }
   } catch (error) {
     console.log('lanIp历史使用记录写入失败', error);
   }

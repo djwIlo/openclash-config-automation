@@ -4,7 +4,7 @@ const initAirConfig = require('./init_air_config');
 const listenRulesSeller = require('./update_rule')
 
 // 初始化机场配置，将自定义代理，规则添加到配置文件中
-// initAirConfig();
+initAirConfig();
 
 // 监听代理配置
 // listenProxySeller();
