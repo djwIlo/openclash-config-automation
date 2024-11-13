@@ -102,17 +102,19 @@ async function listenProxy() {
     console.log('开始更新运行时配置');
     if (AIRPORT_CONFIG.testConfigOutputPath == 'test') {
       console.log('测试');
-      await fs.writeFileSync('./test.yaml', newRunConfigText);
+      fs.writeFileSync('./test.yaml', newRunConfigText);
     } else {
       console.log('正式');
       if (proxyCollection.length == 0) {
         console.log('此次配置文件未作更改，不用更新');
       } else {
         try {
-          await fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, newRunConfigText);
+          fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, newRunConfigText);
           console.log('运行时配置更新成功');
           if (!os.type().includes('Windows')) {
+            console.log('重启openclash服务');
             const output = execSync('/etc/init.d/openclash restart', { encoding: 'utf-8' });
+            console.log('openclash服务重启完毕');
             console.log(`命令输出: ${output}`);
           }
         } catch (error) {
