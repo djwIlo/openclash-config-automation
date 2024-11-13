@@ -1,7 +1,7 @@
 const fs = require('fs');
 const os = require('os');
 const utils = require("./utils");
-const { execSync } = require('child_process');
+const { exec } = require('child_process');
 const AIRPORT_CONFIG = require("../base_config/base_config");
 
 async function listenProxy() {
