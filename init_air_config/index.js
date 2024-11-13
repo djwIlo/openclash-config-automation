@@ -3,7 +3,18 @@ const utils = require('./utils');
 const AIRPORT_CONFIG = require('../base_config/base_config');
 
 const initAirConfig = async () => {
-  // 定义存储
+  // 判断lanIp_history_proxy.json文件是否存在
+  try {
+    if (fs.existsSync(AIRPORT_CONFIG.lanipHistoryProxy)) {
+      console.log('历史代理记录文件以存在');
+    } else {
+      console.log('历史代理记录文件存在，开始创建');
+      fs.writeFileSync(AIRPORT_CONFIG.lanipHistoryProxy, '[]');
+      console.log('历史代理记录文件创建成功');
+    }
+  } catch (err) {
+      console.log('文件不存在');
+  }
 
   // 机场配置序列化数组
   const airConfigArray = utils.readAirConfig(AIRPORT_CONFIG.configFilePath);

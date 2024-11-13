@@ -1,5 +1,7 @@
 const fs = require('fs');
+const os = require('os');
 const utils = require("./utils");
+const { execSync } = require('child_process');
 const AIRPORT_CONFIG = require("../base_config/base_config");
 
 async function listenProxy() {
@@ -106,8 +108,16 @@ async function listenProxy() {
       if (proxyCollection.length == 0) {
         console.log('此次配置文件未作更改，不用更新');
       } else {
-        await fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, newRunConfigText);
-        console.log('运行时配置更新成功');
+        try {
+          await fs.writeFileSync(AIRPORT_CONFIG.outputConfigPath, newRunConfigText);
+          console.log('运行时配置更新成功');
+          if (!os.type().includes('Windows')) {
+            const output = execSync('/etc/init.d/openclash restart', { encoding: 'utf-8' });
+            console.log(`命令输出: ${output}`);
+          }
+        } catch (error) {
+          console.error(`执行出错: ${error.message}`);
+        }
       }
     }
   } catch (error) {
