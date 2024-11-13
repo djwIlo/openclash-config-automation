@@ -113,9 +113,18 @@ async function listenProxy() {
           console.log('运行时配置更新成功');
           if (!os.type().includes('Windows')) {
             console.log('重启openclash服务');
-            const output = execSync('/etc/init.d/openclash restart', { encoding: 'utf-8' });
-            console.log('openclash服务重启完毕');
-            console.log(`命令输出: ${output}`);
+            exec('/etc/init.d/openclash restart', (error, stdout, stderr) => {
+              if (error) {
+                console.error(`执行出错: ${error.message}`);
+                return;
+              }
+              if (stderr) {
+                console.error(`stderr: ${stderr}`);
+                return;
+              }
+              console.log(`命令输出: ${stdout}`);
+              console.log('openclash服务重启完毕');
+            });
           }
         } catch (error) {
           console.error(`执行出错: ${error.message}`);
