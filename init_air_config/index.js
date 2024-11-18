@@ -27,7 +27,7 @@ const initAirConfig = async () => {
   const { customProxyConfig, proxySerialize } = utils.getCustomProxyConfig(AIRPORT_CONFIG.listProxyseller, AIRPORT_CONFIG);  
 
   // 生成自定义规则配置
-  const { ruleConfig, storageProxy } = utils.getCustomRuleConfig(AIRPORT_CONFIG.listRuleseller, AIRPORT_CONFIG.listProxyseller);
+  const { ruleConfig, storageProxy } = utils.getCustomRuleConfig(AIRPORT_CONFIG.listRuleseller, AIRPORT_CONFIG.listProxyseller, AIRPORT_CONFIG.testConfigOutputPath);
   
   // 开始写入局域网历史代理使用记录
   try {

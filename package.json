@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
-    "dev": "cross-env NODE_ENV=development node index.js",
+    "dev": "cross-env NODE_ENV=development node index.js dev",
     "test-start": "cross-env NODE_ENV=production node index.js test",
     "test-dev": "cross-env NODE_ENV=development node index.js test",
     "test": "echo \"Error: no test specified\" && exit 1"

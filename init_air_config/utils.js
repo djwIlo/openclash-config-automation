@@ -105,14 +105,15 @@ function getCustomProxyConfig(file, AIRPORT_CONFIG) {
  * 生成自定义规则配置
  * @param {string} ruleFile 规则文件路径
  * @param {string} proxyFile 代理文件路径
+ * @param {string} systemEnv 系统环境
  * @returns {Object} 规则配置文件数组
  */
-function getCustomRuleConfig(ruleFile, proxyFile) {
+function getCustomRuleConfig(ruleFile, proxyFile, systemEnv) {
   const ruleText = fs.readFileSync(ruleFile, "utf8");
   const ruleArray = ruleText.split("\n"); //基础rule配置
   const lanIp = getArpScanResults();
   const proxyIp = getProxyResult(proxyFile);
-  const { assignProxy, storageProxy } = assignProxies(lanIp, proxyIp);
+  const { assignProxy, storageProxy } = assignProxies(lanIp, proxyIp, systemEnv);
   console.log('哈哈哈哈哈哈哈', assignProxy);
   
   const ruleConfig = ruleArray
@@ -127,10 +128,10 @@ function getCustomRuleConfig(ruleFile, proxyFile) {
  * @param {*} proxyIp
  * @returns
  */
-function assignProxies(lanIp, proxyIp) {
+function assignProxies(lanIp, proxyIp, systemEnv) {
   const assignProxy = lanIp.map((element, index) => {
     const proxy = proxyIp[index % proxyIp.length]; // 通过取模重新分配
-    if (os.type().includes('Windows')) {
+    if (systemEnv != 'product') {
       return `- SRC-IP-CIDR,${element.ip}/32,${proxy.linkProxy} # 代理: ${proxy.host} 设备mac: ${element.mac}`;
     } else {
       return `- SRC-IP-CIDR,${element.ip}/32,${proxy.proxyState} # 代理: ${proxy.host} 设备mac: ${element.mac}`;
