@@ -232,7 +232,7 @@ function getLinkProxyGroup(proxySerialize) {
       `- name: "${item.linkProxy}"\n`,
       `  type: relay\n`,
       `  proxies:\n`,
-      `    - "HK 香港节点"\n`,
+      `    - HK 香港节点\n`,
       `    - "${item.proxyState}"\n`
     ]
 

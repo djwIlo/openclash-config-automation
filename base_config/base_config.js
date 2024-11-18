@@ -16,7 +16,7 @@ class AIRPORT_CONFIG {
   static app = new koa();
   static HOST = ENV.HOST;
   static PORT = ENV.PORT;
-  static notProxyIp = ['192.168.100.1', '192.168.100.2', '192.168.100.3', '192.168.100.4', '192.168.100.200', '192.168.3.1', '192.168.3.252', '192.168.3.251',]
+  static notProxyIp = ['192.168.100.1', '192.168.100.2', '192.168.100.3', '192.168.100.4', '192.168.100.200', '192.168.3.1', '192.168.3.252', '192.168.3.251']
   static detection = ENV.DETECTION; // 检测ip质量
   static configFilePath = os.type().includes('Windows') ? path.join(__dirname, ENV.CONFIG_FILE_PATH) : ENV.CONFIG_FILE_PATH; // 未运行时的配置
   static outputConfigPath = os.type().includes('Windows') ? path.join(__dirname, ENV.OUTPUT_CONFIG_PATH) : ENV.OUTPUT_CONFIG_PATH; // 输出到运行时的配置
