@@ -1,4 +1,5 @@
 const fs = require("fs");
+const os = require('os')
 const getArpScanResults = require("./lanIp");
 const getProxyResult = require("./proxyIp");
 
@@ -112,6 +113,8 @@ function getCustomRuleConfig(ruleFile, proxyFile) {
   const lanIp = getArpScanResults();
   const proxyIp = getProxyResult(proxyFile);
   const { assignProxy, storageProxy } = assignProxies(lanIp, proxyIp);
+  console.log('哈哈哈哈哈哈哈', assignProxy);
+  
   const ruleConfig = ruleArray
     .concat(...assignProxy)
     .map((item) => item + "\n");
@@ -127,7 +130,11 @@ function getCustomRuleConfig(ruleFile, proxyFile) {
 function assignProxies(lanIp, proxyIp) {
   const assignProxy = lanIp.map((element, index) => {
     const proxy = proxyIp[index % proxyIp.length]; // 通过取模重新分配
-    return `- SRC-IP-CIDR,${element.ip}/32,${proxy.proxyState} # 代理: ${proxy.host} 设备mac: ${element.mac}`;
+    if (os.type().includes('Windows')) {
+      return `- SRC-IP-CIDR,${element.ip}/32,${proxy.linkProxy} # 代理: ${proxy.host} 设备mac: ${element.mac}`;
+    } else {
+      return `- SRC-IP-CIDR,${element.ip}/32,${proxy.proxyState} # 代理: ${proxy.host} 设备mac: ${element.mac}`;
+    }
   });
 
   const storageProxy = {};

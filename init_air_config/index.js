@@ -7,6 +7,7 @@ const initAirConfig = async () => {
   try {
     if (fs.existsSync(AIRPORT_CONFIG.lanipHistoryProxy)) {
       console.log('历史代理记录文件已存在');
+      return;
     } else {
       console.log('历史代理记录文件存在，开始创建');
       fs.writeFileSync(AIRPORT_CONFIG.lanipHistoryProxy, '[]');
