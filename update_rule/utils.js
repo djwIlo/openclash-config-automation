@@ -130,6 +130,9 @@ async function updateRunConfig(filePath, historyProxyPath, proxies) {
           
           // 进行代理替换
           console.log('原来的:', el);
+          console.log(item.proxyState, newProxyConfig.proxyState);
+          console.log(item.host, newProxyConfig.host);
+          
           result[i] = el.replace(item.proxyState, newProxyConfig.proxyState).replace(item.host, newProxyConfig.host);
           console.log('替换后的:', result[i]);
 
